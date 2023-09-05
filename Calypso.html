@@ -1,0 +1,44 @@
+
+    <title>Каллипсо</title>
+    <h3>Каллипсо</h3>
+    <style>
+    div{
+        border-radius: 3px;
+        padding: 14px 12px;
+        border: 1px solid black;
+    }
+    .current{
+        background-color: greenyellow;
+    }
+</style>
+<video id = "v" controls >
+</video>
+
+<script>
+    window.onload = (()=>{
+
+        var seria = window.location.search.split('=')[1].padStart(2, '0')
+        //var url=`https://data00-cdn.angrycdn.net/gfi2lm/23aeb559a3789b276f03ed8faa3a003b/grid/7f_MiGordaBella${seria}.a1.23.07.12.mp4`
+        var url=`https://data00-cdn.angrycdn.net/gfi2lm/a20a917ebd62a870a46085d15423ceb1/grid/7f_${seria}-Calypso.a1.11.09.12.mp4`
+        const a = parseFloat(localStorage['seria'+seria] || '0')
+        v.currentTime = a
+        v.src = url
+        v.load()
+        setInterval(()=>{
+            localStorage['seria'+seria] = v.currentTime
+        }, 10000)
+        for (var i=0;i<=80;++i){
+            const link = document.createElement('a')
+            link.href = "?seria="+i
+            const div = document.createElement('div')
+            div.innerText='Серия '+i
+            if(i.toString().padStart(2,'0')==seria){
+                div.classList.add('current')
+            }
+            link.append(div)
+            links.append(link)
+        }
+    })
+</script>
+
+<div id="links" style="display: flex; flex-wrap: wrap; gap: 5px;"></div>
