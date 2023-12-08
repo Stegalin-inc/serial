@@ -88,3 +88,22 @@ function export_descr_unit_parse(descr) {
       return units;
     }, []);
 }
+
+
+function export_descr_unit_parse_2(descr) {
+  return descr
+    .split('\n')
+    .map((x) => x.replace(/;.*/, '').trim())
+    .filter(Boolean)
+    .map((x) => x.replace(/[ ]+/, '@#$').split('@#$'))
+    .reduce((units, [prop, val]) => {
+      if (prop === 'type') units.push({})
+      const last = units.at(-1)
+      last[prop] = val
+        .split(',')
+        .map((x) => x.trim())
+        .map((x) => (Number.isNaN(+x) ? x : +x))
+      last[prop] = last[prop].length === 1 ? last[prop][0] : last[prop]
+      return units
+    }, [])
+}
